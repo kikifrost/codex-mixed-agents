@@ -19,7 +19,7 @@ from version import VERSION
 from security import TOKEN_PATTERNS, configured_secrets
 from catalog import default_config_path
 
-TOP_LEVEL = {"README.md", "AGENTS.md", "LICENSE", "SECURITY.md", "CHANGELOG.md", ".gitignore"}
+TOP_LEVEL = {"README.md", "README.zh-CN.md", "AGENTS.md", "LICENSE", "SECURITY.md", "CHANGELOG.md", ".gitignore"}
 FOLDERS = {"plugins", "tests", "scripts", "docs", ".github", ".agents"}
 SUFFIXES = {".py", ".md", ".json", ".yml", ".yaml", ".html"}
 ASSIGNED = re.compile(r'''(?:api[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret|password)\s*["']?\s*[:=]\s*["']([^"'\n]{16,})["']''', re.I)
