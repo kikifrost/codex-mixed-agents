@@ -107,6 +107,8 @@ class McpStdioClient:
                     stream.close()
             except OSError:
                 pass
+        # communicate() on Python 3.11/3.12 must not flush the closed pipe.
+        self.process.stdin = None
         self.process.terminate()
         try:
             self.process.wait(timeout=8)
