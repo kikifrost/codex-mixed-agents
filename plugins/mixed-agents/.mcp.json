@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mixed_agents": {
+      "command": "python3",
+      "args": ["./bridge/launch.py"],
+      "cwd": ".",
+      "startup_timeout_sec": 10,
+      "tool_timeout_sec": 65
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "kai-mixed-agents",
+  "interface": {"displayName": "Mixed Agents"},
+  "plugins": [
+    {
+      "name": "mixed-agents",
+      "source": {"source": "local", "path": "./plugins/mixed-agents"},
+      "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+      "category": "Developer Tools"
+    }
+  ]
+}

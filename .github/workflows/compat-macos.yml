@@ -1,0 +1,32 @@
+name: Compatibility (manual)
+
+# Run the same checks as quality.yml on GitHub-hosted macOS runners only
+# when manually requested. Regular push and pull request CI covers Linux.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-macos:
+    name: macOS (${{ matrix.python-version }})
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run offline tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Validate release artifacts
+        run: python3 scripts/check_release.py

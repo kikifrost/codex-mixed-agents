@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.DS_Store
+.validation/
+.state/
+*.sqlite3*
+dist/
+*.zip

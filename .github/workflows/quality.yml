@@ -1,0 +1,39 @@
+name: Quality
+
+# Run offline tests and release checks on GitHub-hosted Linux runners.
+# macOS compatibility remains an explicit manual check in compat-macos.yml.
+
+on:
+  push:
+  pull_request:
+  # 手动触发用于精确验证某个 ref。
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.event.pull_request.number || github.ref }}
+  # 只取消 PR 的过时 run；push 保持完整执行。
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run offline tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Validate release artifacts
+        run: python3 scripts/check_release.py
